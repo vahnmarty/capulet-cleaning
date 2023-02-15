@@ -12,9 +12,19 @@ npm run build
 
 ```
 
+---
+
 ## Admin
 
 Go to `/admin`
+
+Default Admin:
+
+`superadmin@capulet.com`
+`password`
+
+---
+
 
 ## API
 
@@ -28,6 +38,8 @@ POST {{url}}/api/book
 - notes
 
 ```
+
+Note: Only `name` is allowed. The rest are pending.
 
 ### Sample Response
 
@@ -69,5 +81,7 @@ For New Values
     },
     "uuid": "#N39-0ZX"
 }
+
+Note: New properties will have `uuid` in the response body. 
 
 ```
