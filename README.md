@@ -10,6 +10,8 @@ php artisan migrate --seed
 npm i
 npm run build
 
+php artisan optimize:clear
+
 ```
 
 ---
