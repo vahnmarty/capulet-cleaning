@@ -20,11 +20,11 @@ class BookingController extends Controller
         }
 
         $type = null;
+        $uuid = null;
+        $property = null;
         $name = $request->name;
         $starts_at = $request->start_at;
         $ends_at = $request->end_at;
-
-        $property = null;
 
         if($this->containsUuid($name)){
             $property = Property::where('name', $name)->first();
@@ -51,12 +51,18 @@ class BookingController extends Controller
             'ends_at' => $ends_at
         ]);
 
-        return [
+        $response = [
             'success' => true,
             'type' => $type,
             'property' => $property,
             'booking' => $booking
         ];
+        
+        if($uuid){
+            $response['uuid'] = $uuid;
+        }
+
+        return response()->json($response);
 
     }
 
