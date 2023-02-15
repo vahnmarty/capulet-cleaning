@@ -4,15 +4,18 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Service;
 use App\Models\Checklist;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Pages\Actions\Action;
 use App\Filament\Resources\ChecklistResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ChecklistResource\RelationManagers;
 use App\Filament\Resources\ChecklistResource\RelationManagers\ItemsRelationManager;
+use App\Filament\Resources\ChecklistResource\RelationManagers\ServicesRelationManager;
 
 class ChecklistResource extends Resource
 {
@@ -43,6 +46,15 @@ class ChecklistResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('checklists')
+                ->action(function (Checklist $record, array $data): void {
+                    // Leave blank, Automatic;
+                })
+                ->form([
+                    Forms\Components\CheckboxList::make('services')
+                        ->relationship('services', 'name')
+                        ->required(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -52,7 +64,7 @@ class ChecklistResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ItemsRelationManager::class
+            ServicesRelationManager::class
         ];
     }
     
@@ -62,5 +74,6 @@ class ChecklistResource extends Resource
             'index' => Pages\ListChecklists::route('/'),
             'edit' => Pages\EditChecklist::route('/{record}/edit'),
         ];
-    }    
+    }
+    
 }

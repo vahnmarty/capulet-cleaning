@@ -13,7 +13,7 @@ class Checklist extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'service_checklist');
+        return $this->belongsToMany(Service::class, 'service_checklist')->withPivot('completed_at');
     }
 
     public function items()

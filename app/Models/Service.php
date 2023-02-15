@@ -13,6 +13,6 @@ class Service extends Model
 
     public function checklists()
     {
-        return $this->belongsToMany(Checklist::class, 'service_checklist');
+        return $this->belongsToMany(Checklist::class, 'service_checklist')->withPivot('completed_at');
     }
 }
