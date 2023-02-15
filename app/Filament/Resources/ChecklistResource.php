@@ -9,11 +9,12 @@ use App\Models\Checklist;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Pages\Actions\Action;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ChecklistResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ChecklistResource\RelationManagers;
+use App\Filament\Resources\ChecklistResource\Pages\ChecklistItems;
 use App\Filament\Resources\ChecklistResource\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\ChecklistResource\RelationManagers\ServicesRelationManager;
 
@@ -45,8 +46,14 @@ class ChecklistResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('checklists')
+                ->icon('heroicon-s-cog')
+                ->color('secondary')
+                ->mountUsing(fn (Forms\ComponentContainer $form, Checklist $record) => $form->fill([
+                    'services' => []
+                ]))
                 ->action(function (Checklist $record, array $data): void {
                     // Leave blank, Automatic;
                 })

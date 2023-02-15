@@ -18,17 +18,17 @@ class EditChecklist extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-            Action::make('checklists')
-                ->action(function (Collection $records, array $data): void {
-                    //return redirect('');
-                })
-                ->form([
-                    Forms\Components\CheckboxList::make('services')
-                        ->label('Services')
-                        ->relationship('services', 'name')
-                        ->options(Service::orderBy('name')->get()->pluck('name', 'id'))
-                        ->required(),
-                ])
+            // Action::make('checklists')
+            //     ->action(function (Collection $records, array $data): void {
+            //         //return redirect('');
+            //     })
+            //     ->form([
+            //         Forms\Components\CheckboxList::make('services')
+            //             ->label('Services')
+            //             ->relationship('services', 'name')
+            //             ->options(Service::orderBy('name')->get()->pluck('name', 'id'))
+            //             ->required(),
+            //     ])
         ];
     }
 }

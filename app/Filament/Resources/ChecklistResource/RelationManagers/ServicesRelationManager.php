@@ -20,9 +20,9 @@ class ServicesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('services')
-                    ->relationship('services', 'name')
+                Forms\Components\TextInput::make('name')
                     ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -36,9 +36,10 @@ class ServicesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label('Add item to this Checklist'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
