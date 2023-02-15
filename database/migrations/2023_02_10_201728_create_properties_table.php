@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid');
+            $table->uuid('uuid')->nullable();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('address1');
+            $table->string('address1')->nullable();
             $table->string('address2')->nullable();
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->string('contact_name');
-            $table->string('contact_email');
-            $table->string('contact_phone');
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('contact_name')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('contact_phone')->nullable();
             $table->string('gate_code')->nullable();
             $table->string('door_code')->nullable();
             $table->longtext('notes')->nullable();
