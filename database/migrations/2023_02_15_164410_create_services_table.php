@@ -8,17 +8,13 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('checklist_items', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('checklist_id')->nullable();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->timestamp('completed_at')->nullable();
             $table->longtext('note')->nullable();
             $table->timestamps();
         });
@@ -26,11 +22,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('checklist_items');
+        Schema::dropIfExists('services');
     }
 };
