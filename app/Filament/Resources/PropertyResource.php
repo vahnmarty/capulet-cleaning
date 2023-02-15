@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
-use App\Models\Property;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Property;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PropertyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PropertyResource\RelationManagers;
+use App\Filament\Resources\PropertyResource\RelationManagers\BookingsRelationManager;
 
 class PropertyResource extends Resource
 {
@@ -44,10 +45,11 @@ class PropertyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('uuid'),
+                Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('bookings_count')->counts('bookings')
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
@@ -62,7 +64,7 @@ class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            BookingsRelationManager::class
         ];
     }
     
@@ -73,5 +75,6 @@ class PropertyResource extends Resource
             'create' => Pages\CreateProperty::route('/create'),
             'edit' => Pages\EditProperty::route('/{record}/edit'),
         ];
-    }    
+    }  
+      
 }
