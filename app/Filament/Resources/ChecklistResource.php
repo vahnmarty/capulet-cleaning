@@ -39,6 +39,7 @@ class ChecklistResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('services_count')->counts('services')->label('Items'),
                 Tables\Columns\TextColumn::make('completed_at')->dateTime(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
@@ -46,7 +47,6 @@ class ChecklistResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('checklists')
                 ->icon('heroicon-s-cog')
