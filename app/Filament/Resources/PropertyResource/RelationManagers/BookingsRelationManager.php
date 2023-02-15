@@ -30,6 +30,7 @@ class BookingsRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('start_at')->dateTime(),
                 Tables\Columns\TextColumn::make('ends_at')->dateTime(),
                 Tables\Columns\TextColumn::make('clean_at')->dateTime(),
