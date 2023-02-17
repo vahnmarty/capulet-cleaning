@@ -32,7 +32,7 @@ class ServiceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name')->sortable(),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
             ])
             ->defaultSort('name')
             ->filters([
