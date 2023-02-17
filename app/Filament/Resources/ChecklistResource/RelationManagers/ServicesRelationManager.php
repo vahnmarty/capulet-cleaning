@@ -39,7 +39,7 @@ class ServicesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //Tables\Actions\CreateAction::make()->label('Add item to this Checklist'),
+                Tables\Actions\CreateAction::make()->label('Add item to this Checklist'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
