@@ -20,4 +20,9 @@ class Checklist extends Model
     {
         return $this->hasMany(ChecklistItem::class);
     }
+
+    public function markComplete()
+    {
+        return $this->update(['completed_at' => now()]);
+    }
 }

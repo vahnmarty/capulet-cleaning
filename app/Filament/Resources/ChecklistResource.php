@@ -47,21 +47,28 @@ class ChecklistResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('complete')
+                    ->button()
+                    ->color('success')
+                    ->label('Mark as Complete')
+                    ->visible(fn(Checklist $record) => $record->completed_at ? false : true)
+                    ->action(fn (Checklist $record) => $record->markComplete())
+                    ->requiresConfirmation(),
                 Tables\Actions\Action::make('checklists')
-                ->icon('heroicon-s-cog')
-                ->color('secondary')
-                ->mountUsing(fn (Forms\ComponentContainer $form, Checklist $record) => $form->fill([
-                    'services' => []
-                ]))
-                ->action(function (Checklist $record, array $data): void {
-                    // Leave blank, Automatic;
-                })
-                ->form([
-                    Forms\Components\CheckboxList::make('services')
-                        ->relationship('services', 'name')
-                        ->required(),
-                ])
+                    ->icon('heroicon-s-cog')
+                    ->color('primary')
+                    ->button()
+                    ->mountUsing(fn (Forms\ComponentContainer $form, Checklist $record) => $form->fill([
+                        'services' => []
+                    ]))
+                    ->action(function (Checklist $record, array $data): void {
+                        // Leave blank, Automatic;
+                    })
+                    ->form([
+                        Forms\Components\CheckboxList::make('services')
+                            ->relationship('services', 'name')
+                            ->required(),
+                    ])
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
