@@ -24,21 +24,54 @@ class PropertyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('description'),
-                Forms\Components\TextInput::make('address1'),
-                Forms\Components\TextInput::make('address2'),
-                Forms\Components\TextInput::make('city'),
-                Forms\Components\TextInput::make('state'),
-                Forms\Components\TextInput::make('zip'),
-                Forms\Components\TextInput::make('contact_name'),
-                Forms\Components\TextInput::make('contact_phone'),
-                Forms\Components\TextInput::make('contact_email')->email(),
-                Forms\Components\TextInput::make('gate_code'),
-                Forms\Components\TextInput::make('door_code'),
-                Forms\Components\TextInput::make('notes'),
-                Forms\Components\TextInput::make('checklist_id'),
-            ]);
+                Forms\Components\Tabs::make('Heading')
+                ->tabs([
+                    Forms\Components\Tabs\Tab::make('General')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')->required(),
+                            Forms\Components\TextInput::make('description'),
+                            Forms\Components\TextInput::make('address1'),
+                            Forms\Components\TextInput::make('address2'),
+                            Forms\Components\TextInput::make('city'),
+                            Forms\Components\TextInput::make('state'),
+                            Forms\Components\TextInput::make('zip'),
+                            Forms\Components\TextInput::make('contact_name'),
+                            Forms\Components\TextInput::make('contact_phone'),
+                            Forms\Components\TextInput::make('contact_email')->email(),
+                            Forms\Components\TextInput::make('gate_code'),
+                            Forms\Components\TextInput::make('door_code'),
+                            Forms\Components\TextInput::make('notes'),
+                            Forms\Components\TextInput::make('checklist_id'),
+                        ]),
+                    Forms\Components\Tabs\Tab::make('Extra')
+                        ->schema([
+                            Forms\Components\TextInput::make('listing_title')->required(),
+                            Forms\Components\TextInput::make('status'),
+                            Forms\Components\TextInput::make('email2'),
+                            Forms\Components\TextInput::make('preferred_contact_method'),
+                            Forms\Components\TextInput::make('link'),
+                            Forms\Components\TextInput::make('bedroom_count')->numeric(),
+                            Forms\Components\TextInput::make('king_count')->numeric(),
+                            Forms\Components\TextInput::make('queen_count')->numeric(),
+                            Forms\Components\TextInput::make('twin_count')->numeric(),
+                            Forms\Components\TextInput::make('full_count')->numeric(),
+                            Forms\Components\TextInput::make('bunk_count')->numeric(),
+                            Forms\Components\TextInput::make('bathrooms')->numeric(),
+                            Forms\Components\TextInput::make('access_code'),
+                            Forms\Components\TextInput::make('parking'),
+                            Forms\Components\TextInput::make('alarm_code'),
+                            Forms\Components\Toggle::make('sheets'),
+                            Forms\Components\TextInput::make('trash_day'),
+                            Forms\Components\TextInput::make('access_code'),
+                            Forms\Components\TextInput::make('recycling'),
+                            Forms\Components\TextInput::make('set_up_date'),
+                            Forms\Components\TextInput::make('checkout_method'),
+                            Forms\Components\TextInput::make('coffee_pot_type'),
+                        ]),
+                    
+                ])
+                
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

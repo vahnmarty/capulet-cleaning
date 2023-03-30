@@ -15,4 +15,9 @@ class Service extends Model
     {
         return $this->belongsToMany(Checklist::class, 'service_checklist')->withPivot('completed_at');
     }
+
+    public function markComplete()
+    {
+        return $this->update(['completed_at' => now()]);
+    }
 }

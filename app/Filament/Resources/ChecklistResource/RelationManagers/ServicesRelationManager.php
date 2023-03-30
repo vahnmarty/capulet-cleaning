@@ -3,12 +3,15 @@
 namespace App\Filament\Resources\ChecklistResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Service;
+use App\Models\Checklist;
+use Filament\Resources\Form;
+use App\Models\ChecklistItem;
+use Filament\Resources\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class ServicesRelationManager extends RelationManager
 {
@@ -42,9 +45,20 @@ class ServicesRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make()->label('Add item to this Checklist'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('complete')
+                    ->button()
+                    ->color('success')
+                    ->label('Mark as Complete')
+                    ->visible(fn(Service $record) => $record->completed_at ? false : true)
+                    ->action(function($record){
+                        $record->completed_at = now();
+                        $record->save();
+                    }),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
