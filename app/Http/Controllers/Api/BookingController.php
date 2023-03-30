@@ -6,26 +6,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Property;
+use Goutte;
+use Str;
 
 class BookingController extends Controller
 {
+    const NOT_VALIDATED = 'not validated';
+
     public function init(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'link' => 'nullable'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json([ 
+                    'error'=>$validator->errors()
+                ], 401);
         }
 
+        
+
+        # Props
         $type = null;
         $uuid = null;
         $property = null;
         $name = $request->name;
         $starts_at = $request->start_at;
         $ends_at = $request->end_at;
+        $statusCode = null;
+        $response = [];
 
+        # UUID
         if($this->containsUuid($name)){
             $property = Property::where('name', $name)->first();
 
@@ -34,6 +47,7 @@ class BookingController extends Controller
             }
         }
 
+        # New Property
         if(!$property)
         {
             $uuid = $this->generateUuid();
@@ -45,24 +59,46 @@ class BookingController extends Controller
             $type  = 'new';
         }
 
-        // Create Booking
+        # AirBnb
+        if($request->link)
+        {
+            $url = $request->link;
+            $airbnb = Str::contains($url, 'airbnb.com');
+
+            if($airbnb){
+                $crawler = Goutte::request('GET', $url);
+                $titleTag = $crawler->filter('title')->text();
+
+                $titleLine = explode(' - ', $titleTag);
+                $title = $titleLine[0];
+
+                if($title){
+                    $property->listing_title = $title;
+                    $property->status = self::NOT_VALIDATED;
+                    $property->save();
+
+                    $statusCode = 201;
+                    $response['message'] = "property saved";
+                }
+
+            }else{
+                $statusCode = 202;
+                $response['message'] = "property saved; unsupported URL";
+            }
+        }
+        
+
+        # Create Booking
         $booking = $property->bookings()->create([
             'start_at' => $starts_at,
             'ends_at' => $ends_at
         ]);
 
-        $response = [
-            'success' => true,
-            'type' => $type,
-            'property' => $property,
-            'booking' => $booking
-        ];
+        # Response
         
-        if($uuid){
-            $response['uuid'] = $uuid;
-        }
+        $response['uuid'] = $property->uuid;
 
-        return response()->json($response);
+        return response()->json($response, $statusCode);
 
     }
 
