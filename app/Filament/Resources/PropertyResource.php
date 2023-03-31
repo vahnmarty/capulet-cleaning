@@ -85,6 +85,7 @@ class PropertyResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('status')->sortable(),
                 Tables\Columns\TextColumn::make('bookings_count')->counts('bookings')
             ])
             ->defaultSort('id', 'desc')
