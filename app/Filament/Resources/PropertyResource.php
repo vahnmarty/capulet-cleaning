@@ -46,6 +46,7 @@ class PropertyResource extends Resource
                     Forms\Components\Tabs\Tab::make('Extra')
                         ->schema([
                             Forms\Components\TextInput::make('listing_title')->required(),
+                            Forms\Components\TextInput::make('image_url'),
                             Forms\Components\TextInput::make('status'),
                             Forms\Components\TextInput::make('email2'),
                             Forms\Components\TextInput::make('preferred_contact_method'),

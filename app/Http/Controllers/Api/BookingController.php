@@ -68,6 +68,9 @@ class BookingController extends Controller
             if($airbnb){
                 $crawler = Goutte::request('GET', $url);
                 $titleTag = $crawler->filter('title')->text();
+                $picture = $crawler->filter('picture source')->first()->attr('srcset');
+                $firstImage = explode(' ', $picture);
+                $image_url =  $firstImage[0];
 
                 $titleLine = explode(' - ', $titleTag);
                 $title = $titleLine[0];
@@ -75,6 +78,11 @@ class BookingController extends Controller
                 if($title){
                     $property->listing_title = $title;
                     $property->status = self::NOT_VALIDATED;
+
+                    if($image_url){
+                        $property->image_url = $image_url;
+                    }
+                    
                     $property->save();
 
                     $statusCode = 201;
