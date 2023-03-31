@@ -8,9 +8,11 @@ use App\Models\Property;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use Livewire\TemporaryUploadedFile;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PropertyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Filament\Resources\PropertyResource\RelationManagers\BookingsRelationManager;
 
@@ -42,11 +44,10 @@ class PropertyResource extends Resource
                             Forms\Components\TextInput::make('door_code'),
                             Forms\Components\TextInput::make('notes'),
                             Forms\Components\TextInput::make('checklist_id'),
-                        ]),
+                        ])->columns(2),
                     Forms\Components\Tabs\Tab::make('Extra')
                         ->schema([
                             Forms\Components\TextInput::make('listing_title')->required(),
-                            Forms\Components\TextInput::make('image_url'),
                             Forms\Components\TextInput::make('status'),
                             Forms\Components\TextInput::make('email2'),
                             Forms\Components\TextInput::make('preferred_contact_method'),
@@ -68,11 +69,14 @@ class PropertyResource extends Resource
                             Forms\Components\TextInput::make('set_up_date'),
                             Forms\Components\TextInput::make('checkout_method'),
                             Forms\Components\TextInput::make('coffee_pot_type'),
-                        ]),
+                        ])->columns(2),
                     
-                ])
+                ])->columnSpan(2),
+                SpatieMediaLibraryFileUpload::make('image')->collection('images')
+                    ->image()
+                    ->columnSpan(1),
                 
-            ])->columns(1);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

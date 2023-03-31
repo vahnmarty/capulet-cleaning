@@ -78,12 +78,12 @@ class BookingController extends Controller
                 if($title){
                     $property->listing_title = $title;
                     $property->status = self::NOT_VALIDATED;
+                    $property->save();
 
                     if($image_url){
-                        $property->image_url = $image_url;
+                        $property->addMediaFromUrl($image_url)->toMediaCollection('images');
                     }
                     
-                    $property->save();
 
                     $statusCode = 201;
                     $response['message'] = "property saved";
