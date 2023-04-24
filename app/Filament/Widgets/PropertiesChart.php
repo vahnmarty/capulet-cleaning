@@ -2,20 +2,13 @@
 
 namespace App\Filament\Widgets;
 
-use Carbon\Carbon;
-use App\Models\Booking;
+use App\Models\Property;
 use Filament\Widgets\LineChartWidget;
+use Carbon\Carbon;
 
-class BookingsChart extends LineChartWidget
+class PropertiesChart extends LineChartWidget
 {
-    protected static ?string $heading = 'Chart';
-
-    public ?string $filter = 'last_7_days';
-
-    protected function getHeading(): string
-    {
-        return 'Bookings';
-    }
+    protected static ?string $heading = 'Properties';
 
     protected function getData(): array
     {
@@ -51,7 +44,7 @@ class BookingsChart extends LineChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Booking',
+                    'label' => 'Property',
                     'data' => $data['data'],
                 ],
             ],
@@ -81,8 +74,8 @@ class BookingsChart extends LineChartWidget
         foreach ($start->daysUntil($end) as $date) {
             $var_date = $date->format('Y-m-d');
 
-            $bookings = Booking::whereDate('created_at', $var_date)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereDate('created_at', $var_date)->count();
+            $data[] = $Propertys;
             $days[] = $date->format('M d');
         }
         
@@ -102,8 +95,8 @@ class BookingsChart extends LineChartWidget
         foreach ($start->daysUntil($end) as $date) {
             $var_date = $date->format('Y-m-d');
 
-            $bookings = Booking::whereDate('created_at', $var_date)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereDate('created_at', $var_date)->count();
+            $data[] = $Propertys;
             $days[] = $date->format('M d');
         }
         
@@ -123,8 +116,8 @@ class BookingsChart extends LineChartWidget
         foreach ($start->daysUntil($end) as $date) {
             $var_date = $date->format('Y-m-d');
 
-            $bookings = Booking::whereDate('created_at', $var_date)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereDate('created_at', $var_date)->count();
+            $data[] = $Propertys;
             $days[] = $date->format('M d');
         }
         
@@ -146,8 +139,8 @@ class BookingsChart extends LineChartWidget
 
             $var_month = $month->format('m');
 
-            $bookings = Booking::whereMonth('created_at', $var_month)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereMonth('created_at', $var_month)->count();
+            $data[] = $Propertys;
             $months[] = $month->format('M Y');
         }
         
@@ -170,8 +163,8 @@ class BookingsChart extends LineChartWidget
             $month = $start->copy()->addMonthsNoOverflow($i-1);
             $var_month = $month->format('m');
 
-            $bookings = Booking::whereMonth('created_at', $var_month)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereMonth('created_at', $var_month)->count();
+            $data[] = $Propertys;
             $months[] = $month->format('M Y');
         }
         
@@ -194,8 +187,8 @@ class BookingsChart extends LineChartWidget
             $month = $start->copy()->addMonthsNoOverflow($i-1);
             $var_month = $month->format('m');
 
-            $bookings = Booking::whereMonth('created_at', $var_month)->count();
-            $data[] = $bookings;
+            $Propertys = Property::whereMonth('created_at', $var_month)->count();
+            $data[] = $Propertys;
             $months[] = $month->format('M Y');
         }
         
