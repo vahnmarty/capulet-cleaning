@@ -13,7 +13,7 @@ class DateFilter extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $filter;
+    public $filter = 'last_7_days';
     
     public function render()
     {
