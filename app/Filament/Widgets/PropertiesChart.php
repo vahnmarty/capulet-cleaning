@@ -10,9 +10,18 @@ class PropertiesChart extends LineChartWidget
 {
     protected static ?string $heading = 'Properties';
 
+    public $active_filter = 'last_7_days';
+
+    protected $listeners = ['updateFilter'];
+
+    public function updateFilter($state)
+    {
+        $this->active_filter = $state;
+    }
+
     protected function getData(): array
     {
-        $filter = $this->filter; // e.g. last 7 days
+        $filter = $this->active_filter; // e.g. last 7 days
 
         $data['data'] = [];
         $data['label'] = [];
@@ -49,18 +58,6 @@ class PropertiesChart extends LineChartWidget
                 ],
             ],
             'labels' => $data['label'],
-        ];
-    }
-
-    protected function getFilters(): ?array
-    {
-        return [
-            'last_7_days' => 'Last 7 days',
-            'last_30_days' => 'Last 30 days',
-            'last_90_days' => 'Last 90 Days',
-            'last_6_months' => 'Last 6 months',
-            'this_year' => 'This Year',
-            'last_year' => 'Last Year'
         ];
     }
 

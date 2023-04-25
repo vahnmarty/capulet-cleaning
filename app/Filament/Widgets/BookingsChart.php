@@ -10,16 +10,23 @@ class BookingsChart extends LineChartWidget
 {
     protected static ?string $heading = 'Chart';
 
-    public ?string $filter = 'last_7_days';
+    public $active_filter = 'last_7_days';
+
+    protected $listeners = ['updateFilter'];
 
     protected function getHeading(): string
     {
         return 'Bookings';
     }
 
+    public function updateFilter($state)
+    {
+        $this->active_filter = $state;
+    }
+
     protected function getData(): array
     {
-        $filter = $this->filter; // e.g. last 7 days
+        $filter = $this->active_filter; // e.g. last 7 days
 
         $data['data'] = [];
         $data['label'] = [];
@@ -56,18 +63,6 @@ class BookingsChart extends LineChartWidget
                 ],
             ],
             'labels' => $data['label'],
-        ];
-    }
-
-    protected function getFilters(): ?array
-    {
-        return [
-            'last_7_days' => 'Last 7 days',
-            'last_30_days' => 'Last 30 days',
-            'last_90_days' => 'Last 90 Days',
-            'last_6_months' => 'Last 6 months',
-            'this_year' => 'This Year',
-            'last_year' => 'Last Year'
         ];
     }
 
