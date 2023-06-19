@@ -54,6 +54,19 @@ class BookingController extends Controller
             $property = new Property;
             $property->name  = $name . ' ' . $uuid;
             $property->uuid = $uuid;
+            $property->status = self::NOT_VALIDATED;
+            $property->link = $request->link;
+            $property->address1 = $request->address;
+            $property->bedroom_count = $request->bedroom_count;
+            $property->king_count = $request->king_count;
+            $property->queen_count = $request->queen_count;
+            $property->door_code = $request->access_code;
+            $property->parking = $request->parking;
+            $property->set_up_date = $request->set_up_date;
+            $property->checkout_method = $request->checkout_method;
+            $property->coffee_pot_type = $request->coffee_pot_type;
+            $property->trash_day = $request->trash_day;
+
             $property->save();
 
             $type  = 'new';
@@ -77,7 +90,6 @@ class BookingController extends Controller
 
                 if($title){
                     $property->listing_title = $title;
-                    $property->status = self::NOT_VALIDATED;
                     $property->save();
 
                     if($image_url){
